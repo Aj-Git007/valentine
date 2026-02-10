@@ -103,6 +103,16 @@
       left: 0;
       top: 0;
     }
+
+    
+    #ooBTN{
+            background-color: #ff4d6d;
+      color: #ffffff;
+      position: relative; /* stays in container flow */
+      left: 0;
+      top: 0;
+    }
+    
   </style>
 </head>
 
@@ -111,7 +121,7 @@
     <img src="./assets/begging cat.jpg" alt="Cute Cat" />
     <h2>
       Payag ka, labas tayo sa Feb 14? <br />
-      Kahit saan lang jan sa Batangas 💕
+      Puntahan ulit kita jan sa Batangas 💕
     </h2>
     <div class="BTNS">
       <button id="yesBtn">YES 💖</button>
@@ -122,6 +132,8 @@
   <script>
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
+    const chooseBTN = document.getElementById("chooseBTN");
+    const ooBTN = document.getElementById("ooBTN");
 
     // Store NO button's last position
     let lastX = noBtn.offsetLeft;
@@ -145,6 +157,9 @@
 
       noBtn.style.left = `${x}px`;
       noBtn.style.top = `${y}px`;
+
+      chooseBTN.style.left = `${x}px`;
+      chooseBTN.style.top = `${y}px`;
 
       // store last position
       lastX = x;
@@ -174,19 +189,42 @@
 
     noBtn.addEventListener("click", moveNoButton);
 
-    yesBtn.addEventListener("click", () => {
-      const box = document.getElementById("box");
+yesBtn.addEventListener("click", () => {
+  const box = document.getElementById("box");
+  box.innerHTML = `
+    <img src="./yey.png" alt="Cute Cat" />
+    <h1 style="color:#ff4d6d;">Yay!! 💕</h1>
+    <p style="font-size:16px;">Copy po Miss Bea, pupunta ako jan 😁</p>
+    <h2>See you on Feb 14 ❤️</h2>
+    <button id="chooseBTN">Choose Again</button>
+  `;
+
+  const chooseBTN = document.getElementById("chooseBTN");
+  chooseBTN.addEventListener("click", () => {
+    box.innerHTML = `
+      <img src="./crying-cat.png" alt="Cute Cat" />
+      <h2>Awws, ayaw mo?? 😢😢😢</h2>
+      <button id="ooBTN">Sige na Nga!</button>
+    `;
+
+    // Grab the OO button AFTER it is in the DOM
+    const ooBTN = document.getElementById("ooBTN");
+    ooBTN.addEventListener("click", () => {
       box.innerHTML = `
-          <img src="./yey.png" alt="Cute Cat" />
+        <img src="./yey.png" alt="Cute Cat" />
         <h1 style="color:#ff4d6d;">Yay!! 💕</h1>
         <p style="font-size:16px;">Copy po Miss Bea, pupunta ako jan 😁</p>
         <h2>See you on Feb 14 ❤️</h2>
-        <button id="chooseBTN">Choose Again</button>
       `;
     });
+  });
+});
+
+
   </script>
 </body>
 </html>
+
 
 
 
