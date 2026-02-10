@@ -32,6 +32,7 @@
       width: 90%;
       max-width: 360px;
       animation: float 3s ease-in-out infinite;
+      position: relative;
       z-index: 1;
     }
 
@@ -54,81 +55,104 @@
       line-height: 1.4;
     }
 
+    .BTNS {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      position: relative; /* container for YES/NO */
+      height: 50px; /* reserve space for NO button movement */
+    }
+
     button {
-      width:40%;
+      width: 40%;
       padding: 14px;
       font-size: 18px;
       border: none;
       border-radius: 12px;
       cursor: pointer;
-      margin: 8px 0;
       transition: transform 0.15s ease;
-     position: fixed;  
+      position: absolute; /* only NO button will move freely */
     }
 
     button:active {
       transform: scale(0.96);
-    }
-    .BTNS{
-        display: flex;
-        flex-direction: row;
-        z-index: 2;
-   
     }
 
     #yesBtn {
       background-color: #ff4d6d;
       color: #ffffff;
       position: relative; /* stays in container flow */
+      left: 0;
+      top: 0;
     }
 
     #noBtn {
       background-color: #d3d3d3;
-margin-left: 40%;
+      left: 50%;  /* start centered in BTNS container */
+      top: 0;
+      transform: translateX(-50%);
     }
   </style>
 </head>
 
 <body>
   <div class="container" id="box">
-    <img src="./assets/begging cat.jpg" alt="Cute Cat" />
+    <img src="./assets/begging-cat.jpg" alt="Cute Cat" />
     <h2>
       Payag ka, labas tayo sa Feb 14? <br />
       Kahit saan lang jan sa Batangas 💕
     </h2>
-    <!-- <h2>meow</h2> -->
     <div class="BTNS">
-    <button id="yesBtn">YES 💖</button>
-    <button id="noBtn">NO 😢</button>
+      <button id="yesBtn">YES 💖</button>
+      <button id="noBtn">NO 😢</button>
     </div>
-
   </div>
 
   <script>
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
-    const box = document.getElementById("box");
+
+    // Store NO button's last position
+    let lastX = noBtn.offsetLeft;
+    let lastY = noBtn.offsetTop;
 
     function moveNoButton() {
-      const padding = 10;
+      const padding = 5; // min distance from edges
+      const maxMove = 70; // maximum distance button can move
 
       // viewport size
       const vw = window.visualViewport ? window.visualViewport.width : window.innerWidth;
       const vh = window.visualViewport ? window.visualViewport.height : window.innerHeight;
 
-      const maxX = vw - noBtn.offsetWidth - padding;
-      const maxY = vh - noBtn.offsetHeight - padding;
+      // calculate new position randomly near current
+      let x = lastX + (Math.random() - 0.5) * maxMove * 2; // -maxMove to +maxMove
+      let y = lastY + (Math.random() - 0.5) * maxMove * 2;
 
-      const x = Math.random() * maxX;
-      const y = Math.random() * maxY;
+      // clamp to viewport
+      x = Math.max(padding, Math.min(x, vw - noBtn.offsetWidth - padding));
+      y = Math.max(padding, Math.min(y, vh - noBtn.offsetHeight - padding));
 
       noBtn.style.left = `${x}px`;
       noBtn.style.top = `${y}px`;
+
+      // store last position
+      lastX = x;
+      lastY = y;
     }
 
-    
+    // Start NO button just below YES button
+    window.addEventListener("load", () => {
+      const yesRect = yesBtn.getBoundingClientRect();
+      const containerRect = yesBtn.parentElement.getBoundingClientRect();
 
-    // mobile interactions
+      lastX = yesRect.left - containerRect.left + yesRect.width + 10;
+      lastY = yesRect.top - containerRect.top;
+
+      noBtn.style.left = `${lastX}px`;
+      noBtn.style.top = `${lastY}px`;
+    });
+
+    // Mobile interactions
     noBtn.addEventListener("touchstart", (e) => {
       e.preventDefault();
       moveNoButton();
@@ -137,6 +161,7 @@ margin-left: 40%;
     noBtn.addEventListener("click", moveNoButton);
 
     yesBtn.addEventListener("click", () => {
+      const box = document.getElementById("box");
       box.innerHTML = `
         <h1 style="color:#ff4d6d;">Yay!! 💕</h1>
         <p style="font-size:16px;">Copy po Miss Bea, pupunta ako jan 😁</p>
@@ -146,4 +171,3 @@ margin-left: 40%;
   </script>
 </body>
 </html>
-
