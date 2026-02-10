@@ -55,7 +55,7 @@
     }
 
     button {
-      width: 100%;
+      width:40%;
       padding: 14px;
       font-size: 18px;
       border: none;
@@ -63,12 +63,17 @@
       cursor: pointer;
       margin: 8px 0;
       transition: transform 0.15s ease;
-      z-index: 2;
-      position: fixed; /* needed for free movement */
+     position: fixed;  
     }
 
     button:active {
       transform: scale(0.96);
+    }
+    .BTNS{
+        display: flex;
+        flex-direction: row;
+        z-index: 2;
+   
     }
 
     #yesBtn {
@@ -79,21 +84,24 @@
 
     #noBtn {
       background-color: #d3d3d3;
-      /* left: 0; 
-      top: 0;  */
+margin-left: 50%;
     }
   </style>
 </head>
 
 <body>
   <div class="container" id="box">
-    <img src="./assets/begging cat.jpg" alt="Cute Cat" />
-    <h2>
+    <img src="./assets/begging-cat.jpg" alt="Cute Cat" />
+    <!-- <h2>
       Payag ka, labas tayo sa Feb 14? <br />
       Kahit saan lang jan sa Batangas 💕
-    </h2>
-    <button id="yesBtn">YES 💖Boi</button>
+    </h2> -->
+    <h2>meow</h2>
+    <div class="BTNS">
+    <button id="yesBtn">YES 💖</button>
     <button id="noBtn">NO 😢</button>
+    </div>
+
   </div>
 
   <script>
@@ -118,21 +126,21 @@
       noBtn.style.top = `${y}px`;
     }
 
-    function placeNoButtonBelowYes() {
-      const rect = yesBtn.getBoundingClientRect();
-      const padding = 8;
+    // function placeNoButtonBelowYes() {
+    //   const rect = yesBtn.getBoundingClientRect();
+    //   const padding = 8;
 
-      // start horizontally aligned with container center
-      const containerRect = box.getBoundingClientRect();
-      const centerX = containerRect.left + containerRect.width / 2 - noBtn.offsetWidth / 2;
+    //   // start horizontally aligned with container center
+    //   const containerRect = box.getBoundingClientRect();
+    //   const centerX = containerRect.left + containerRect.width / 2 - noBtn.offsetWidth / 2;
 
-      noBtn.style.left = `${centerX}px`;
-      noBtn.style.top = `${rect.bottom + padding}px`; // just below YES button
-    }
+    //   noBtn.style.left = `${centerX}px`;
+    //   noBtn.style.top = `${rect.bottom + padding}px`; // just below YES button
+    // }
 
-    // initialize NO button below YES button
-    window.addEventListener("load", placeNoButtonBelowYes);
-    window.addEventListener("resize", placeNoButtonBelowYes); // keep responsive
+   
+    // window.addEventListener("load", placeNoButtonBelowYes);
+   // window.addEventListener("resize", placeNoButtonBelowYes); 
 
     // mobile interactions
     noBtn.addEventListener("touchstart", (e) => {
@@ -152,5 +160,3 @@
   </script>
 </body>
 </html>
-
-
