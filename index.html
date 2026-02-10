@@ -57,10 +57,12 @@
 
     .BTNS {
       display: flex;
-      justify-content: left;
+        flex-direction: row;
+        justify-content: left;
       gap: 10px;
-      position: relative; /* container for YES/NO */
-      height: 50px; /* reserve space for NO button movement */
+      position: relative; 
+      height: 50px;
+      margin-left: 15%;
     }
 
     button {
@@ -88,9 +90,9 @@
 
     #noBtn {
       background-color: #d3d3d3;
-      left: 100%;  /* start centered in BTNS container */
+      /* right: 10%;   */
       top: 0;
-      transform: translateX(-50%);
+      /* transform: translateX(-50%); */
     }
   </style>
 </head>
@@ -171,5 +173,4 @@
   </script>
 </body>
 </html>
-
 
