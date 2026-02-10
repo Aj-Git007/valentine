@@ -2,9 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+
+  <!-- IMPORTANT: Mobile-only viewport -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
   <title>Date With Me 💕</title>
 
   <style>
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
     body {
       margin: 0;
       height: 100vh;
@@ -14,65 +23,72 @@
       background: linear-gradient(135deg, #ff758c, #ff7eb3);
       font-family: Arial, sans-serif;
       overflow: hidden;
+      touch-action: manipulation;
     }
 
     .container {
       text-align: center;
-      background: white;
-      padding: 40px;
+      background: #ffffff;
+      padding: 25px;
       border-radius: 18px;
       box-shadow: 0 15px 40px rgba(0,0,0,0.25);
       position: relative;
+      width: 90%;
+      max-width: 360px;
       animation: float 3s ease-in-out infinite;
-      max-width: 90%;
     }
 
     @keyframes float {
       0% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+      50% { transform: translateY(-8px); }
       100% { transform: translateY(0); }
     }
 
     img {
-      border-radius: 12px;
+      width: 180px;
+      border-radius: 14px;
       margin-bottom: 15px;
     }
 
     h2 {
       color: #ff4d6d;
-      margin-bottom: 25px;
+      font-size: 18px;
+      margin-bottom: 20px;
+      line-height: 1.4;
     }
 
     button {
-      padding: 12px 25px;
+      width: 100%;
+      padding: 14px;
       font-size: 18px;
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
       cursor: pointer;
-      margin: 10px;
-      transition: all 0.2s ease;
+      margin: 8px 0;
+      transition: transform 0.15s ease;
+    }
+
+    button:active {
+      transform: scale(0.96);
     }
 
     #yesBtn {
       background-color: #ff4d6d;
-      color: white;
-    }
-
-    #yesBtn:hover {
-      background-color: #ff2e63;
-      transform: scale(1.08);
+      color: #ffffff;
     }
 
     #noBtn {
-      background-color: #ccc;
+      background-color: #d3d3d3;
       position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
     }
   </style>
 </head>
 
 <body>
   <div class="container" id="box">
-    <img src="./assets/begging cat.jpg" alt="Cute Cat" width="200" />
+    <img src="./assets/begging-cat.jpg" alt="Cute Cat" />
 
     <h2>
       Payag ka, labas tayo sa Feb 14? <br />
@@ -89,7 +105,7 @@
     const box = document.getElementById("box");
 
     function moveNoButton() {
-      const padding = 20;
+      const padding = 15;
       const maxX = window.innerWidth - noBtn.offsetWidth - padding;
       const maxY = window.innerHeight - noBtn.offsetHeight - padding;
 
@@ -100,17 +116,18 @@
       noBtn.style.top = y + "px";
     }
 
-    // Desktop
-    noBtn.addEventListener("mouseover", moveNoButton);
+    // MOBILE ONLY: touch interaction
+    noBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      moveNoButton();
+    });
 
-    // Mobile
-    noBtn.addEventListener("touchstart", moveNoButton);
     noBtn.addEventListener("click", moveNoButton);
 
     yesBtn.addEventListener("click", () => {
       box.innerHTML = `
         <h1 style="color:#ff4d6d;">Yay!! 💕</h1>
-        <p>Copy po Miss Bea, pupunta ako jan 😁</p>
+        <p style="font-size:16px;">Copy po Miss Bea, pupunta ako jan 😁</p>
         <h2>See you on Feb 14 ❤️</h2>
       `;
     });
